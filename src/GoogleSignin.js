@@ -10,7 +10,7 @@ class GoogleSignin {
   constructor() {
     if (__DEV__ && !RNGoogleSignin) {
       console.error(
-        `RN GoogleSignin native module is not correctly linked. Please read the readme, setup and troubleshooting instructions carefully or try manual linking. If you're using Expo, please use expo-google-sign-in. This is because Expo does not support custom native modules.`
+        'RN GoogleSignin native module is not correctly linked. Please read the readme, setup and troubleshooting instructions carefully or try manual linking.'
       );
     }
   }
@@ -72,9 +72,14 @@ class GoogleSignin {
   async getTokens() {
     if (IS_IOS) {
       const tokens = await RNGoogleSignin.getTokens();
+      const refreshTokens = await RNGoogleSignin.refreshTokens();
+      console.log('refreshTokens: ', refreshTokens);
+
       return tokens;
     } else {
       const userObject = await RNGoogleSignin.getTokens();
+      console.log('userObject: ', userObject);
+
       return {
         idToken: userObject.idToken,
         accessToken: userObject.accessToken,
@@ -91,3 +96,4 @@ export const statusCodes = {
   PLAY_SERVICES_NOT_AVAILABLE: RNGoogleSignin.PLAY_SERVICES_NOT_AVAILABLE,
   SIGN_IN_REQUIRED: RNGoogleSignin.SIGN_IN_REQUIRED,
 };
+
